@@ -44,15 +44,30 @@ Article.loadAll = function(rawData) {
 // This function will retrieve the data from either a local or remote source,
 // and process it, then hand off control to the View.
 Article.fetchAll = function() {
-  if (localStorage.rawData) {
+  /*if (localStorage.rawData) {
+    var storedData = JSON.parse(localStorage.getItem('rawData'));
     // When rawData is already in localStorage,
     // we can load it by calling the .loadAll function,
     // and then render the index page (using the proper method on the articleView object).
-    Article.loadAll(//TODO: What do we pass in here to the .loadAll function?
-    );
-    articleView.someFunctionToCall//(); //TODO: Change this fake method call to the correct one that will render the index page.
+    Article.loadAll(storedData);
+    console.log('rawData exits');
+
+      //TODO   Done: What do we pass in here to the .loadAll function?
+    //);
+    articleView.initIndexPage();
+    //(); //TODO: DONE   Change this fake method call to the correct one that will render the index page.
   } else {
-    // TODO: When we don't already have the rawData, we need to:
+      console.log('making ajax call');
+    $.ajax ({
+      url: 'data/ipsumArticles.json',
+      type: 'GET',
+      success: function(data){
+        Article.loadAll(data);
+        localStorage.setItem('rawData',JSON.stringify(data));
+        articleView.initIndexPage();
+     }
+  });
+    // TODO: DONE When we don't already have the rawData, we need to:
     // 1. Retrieve the JSON file from the server with AJAX (which jQuery method is best for this?),
 
     // 2. Store the resulting JSON data with the .loadAll method,
@@ -61,5 +76,41 @@ Article.fetchAll = function() {
 
     // 4. And then render the index page (perhaps with an articleView method?).
 
+  }*/
+  function fetchFromServer(){
+    $.getJSON('data/hackerIpsum.json', function (data){
+      Article.loadAll(data);
+      localStorage.setItem('rawData',JSON.stringify(data));
+      articleView.initIndexPage();
+    });
   }
+
+  function fetchFromLocalStorage(){
+    var rawData = localStorage.getItem('rawData');
+    var rawDataJSON = JSON.parse(rawData);
+    Article.loadAll(rawDataJSON);
+    articleView.initIndexPage();
+  }
+
+  $.ajax ({
+    url: 'data/ipsumArticles.json',
+    type: 'HEAD',
+    success: function(data, message,xhr){
+      var etag = xhr.getResponseHeader('ETag');
+
+      if (localStorage.etag) {
+        var localEtag = localStorage.getItem('etag');
+        if(localEtag===etag && localStorage.rawData){
+          fetchFromLocalStorage();
+        }else {
+          fetchFromServer();
+        }
+      }else {
+          fetchFromServer();
+        }
+        localStorage.setItem('etag',etag);
+        }
+      });
+
+
 }
