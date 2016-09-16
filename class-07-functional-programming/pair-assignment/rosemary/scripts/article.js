@@ -1,5 +1,7 @@
-// TODO: Wrap the entire contents of this file in an IIFE.
+// DONE: Wrap the entire contents of this file in an IIFE.
 // Pass in to the IIFE a module, upon which objects can be attached for later access.
+(function Articles (module) {
+
 function Article (opts) {
   this.author = opts.author;
   this.authorUrl = opts.authorUrl;
@@ -48,28 +50,39 @@ Article.fetchAll = function() {
   if (localStorage.rawData) {
     Article.loadAll(JSON.parse(localStorage.rawData));
     articleView.initIndexPage();
+
   } else {
     $.getJSON('/data/hackerIpsum.json', function(rawData) {
       Article.loadAll(rawData);
       localStorage.rawData = JSON.stringify(rawData); // Cache the json, so we don't need to request it next time.
       articleView.initIndexPage();
+
     });
   }
 };
 
-// TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
+// DONE: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
 Article.numWordsAll = function() {
   return Article.all.map(function(article) {
-    return // Get the total number of words in this article
+    return article.body.split('').length; // Get the total number of words in this article
   })
-  .reduce(function(a, b) {
-    return // Sum up all the values in the collection
+  .reduce(function(accum, index) {
+    return  accum + index;  // Sum up all the values in the collection
   })
 };
 
 // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
 Article.allAuthors = function() {
-  return // Don't forget to read the docs on map and reduce!
+  return Article.all.map(function(article)
+    return article.author;
+  })  
+  // reduce to get rid of redundant authors
+  .reduce(function(accum, name){
+    if(accum.indexOf(name) === -1){
+      accum.push(name);  // add if not there
+    }
+    return accum;
+  }, [])
 };
 
 Article.numWordsByAuthor = function() {
@@ -78,6 +91,18 @@ Article.numWordsByAuthor = function() {
   return Article.allAuthors().map(function(author) {
     return {
       // someKey: someValOrFunctionCall().map(...).reduce(...), ...
+           name: author,
+           numWords: Article.all.filter(function(article){
+             return article.author === author;
+           })
+      .map(function(article){
+        return article.body.match(/b\w+/g).length;
+      })     
+      .reduce(function(accum, index){
+        return accum + index;
+      })
     }
   })
 };
+
+})(window);
