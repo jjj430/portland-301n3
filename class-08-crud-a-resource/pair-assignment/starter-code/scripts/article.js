@@ -19,17 +19,17 @@
     return template(this);
   };
 
-  // TODO: -DONE?- Set up a DB table for articles.
+  // TODO: -DONE- Set up a DB table for articles.
   Article.createTable = function(callback) {
     webDB.execute(
     // what SQL command do we run here inside these quotes?
     'CREATE TABLE IF NOT EXISTS articles (' +
         'id INTEGER PRIMARY KEY, ' +
-        'title VARCHAR(255) NOT NULL, ' +
-        'category VARCHAR(255) NOT NULL, ' +
-        'author VARCHAR(255) NOT NULL, ' +
-        'authorUrl VARCHAR(255) NOT NULL, ' +
-        'publishedOn VARCHAR(255), ' +
+        'title VARCHAR(100) NOT NULL, ' +
+        'category VARCHAR(100), ' +
+        'author VARCHAR(255), ' +
+        'authorUrl VARCHAR(2000) NOT NULL, ' +
+        'publishedOn VARCHAR(255) NOT NULL, ' +
         'body TEXT NOT NULL);',
       function(result) {
         console.log('Successfully set up the articles table.', result);
@@ -40,7 +40,7 @@
     );
   };
 
-  // TODO: -DONE?- Use correct SQL syntax to delete all records from the articles table.
+  // TODO: -DONE- Use correct SQL syntax to delete all records from the articles table.
   Article.truncateTable = function(callback) {
     webDB.execute(
       'DELETE FROM articles;', // <----finish the command here, inside the quotes.
@@ -49,13 +49,13 @@
   };
 
 
-  // TODO: -DONE- nsert an article instance into the database:
+  // TODO: -DONE- Insert an article instance into the database:
   Article.prototype.insertRecord = function(callback) {
     webDB.execute(
       [
         {
-          sql: 'INSERT INTO articles (id, title, category, author, authorUrl, publishedOn, body) VALUES (?, ?, ?, ?, ?, ?, ?)',
-          data: [this.id, this.title, this.category, this.author, this.authorUrl, this.publishedOn, this.body],
+          sql: 'INSERT INTO articles (title, category, author, authorUrl, publishedOn, body) VALUES (?, ?, ?, ?, ?, ?)',
+          data: [this.title, this.category, this.author, this.authorUrl, this.publishedOn, this.body],
         }
       ],
       callback
