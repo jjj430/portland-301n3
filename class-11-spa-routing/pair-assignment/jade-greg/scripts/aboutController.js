@@ -5,6 +5,7 @@
   aboutController.index = function() {
       $('#about').show();
       $('#articles').hide();
+      $('#admin').hide();
   };
 
   module.aboutController = aboutController;

@@ -39,6 +39,7 @@
           <li class="tab" data-content="about"><a href="/about" class="icon-address-book"> About</a></li>
           <li><a href="http://twitter.com/brookr" target="_blank" class="icon-twitter3"> Twitter</a></li>
           <li><a href="http://github.com/brookr" target="_blank" class="icon-github"> GitHub</a></li>
+          <li class="tab" data-content="admin"><a href="/admin" class="icon-address-book">Stats</a></li>
         </ul>
       </nav>
     </header>
@@ -72,6 +73,25 @@
           </ul>
         </section>
       </section>
+
+    <section id="admin" class="tab-content">
+      <script id="author-template" type="text/x-handlebars-template">
+        <li><strong>{{name}}</strong>: {{numWords}} words written</li>
+      </script>
+
+      <main class="clearfix">
+        <h1>Blog Stats</h1>
+        <section id="blog-stats">
+          <dt>Total articles:</dt> <dd class="articles"></dd>
+          <dt>Total words:</dt> <dd class="words"></dd>
+          <h2>Author Stats</h2>
+          <p><em>Details on who is writing, and how much writing they are doing...</em></p>
+          <ul class="author-stats">
+          </ul>
+        </section>
+      </main>
+    </section>
+
     </main>
     <footer>
       &copy; 2015 Code Fellows | Static Blog | Happy Ipsum!
@@ -91,6 +111,7 @@
 
     <script src="scripts/aboutController.js"></script>
     <script src="scripts/articleController.js"></script>
+    <script src="scripts/adminController.js"></script>
     <script src="scripts/routes.js"></script>
 
     <!-- DONE: These function calls inside the script tag do not look great here. Why not place them where

@@ -12,6 +12,7 @@
   articlesController.index = function() {
       $('#about').hide();
       $('#articles').show();
+      $('#admin').hide();
   };
 
   module.articlesController = articlesController;
