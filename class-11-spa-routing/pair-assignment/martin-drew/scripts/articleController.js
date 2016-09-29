@@ -10,6 +10,7 @@
   // DONE: Also be sure to hide all the main section elements, and reveal the #articles section:
   articlesController.index = function() {
     $('#about').hide();
+    $('#blog-stats').hide();
     $('#articles').show();
 
 

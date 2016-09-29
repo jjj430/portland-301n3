@@ -37,6 +37,8 @@
         <ul>
           <li class="tab" data-content="articles"><a href="/" class="icon-home"> Home</a></li>
           <li class="tab" data-content="about"><a href="/about" class="icon-address-book"> About</a></li>
+          <li class="tab" data-content="stats"><a href="/stats" class="icon-lightning"> Stats</a></li>
+
           <li><a href="http://twitter.com/brookr" target="_blank" class="icon-twitter3"> Twitter</a></li>
           <li><a href="http://github.com/brookr" target="_blank" class="icon-github"> GitHub</a></li>
         </ul>
@@ -72,6 +74,20 @@
           </ul>
         </section>
       </section>
+<!-- DONE(Stretch): Moved blog-stat section from admin.html to index.html -->
+      <section id="blog-stats">
+        <h1>Blog Stats</h1>
+        <dt>Total articles:</dt> <dd class="articles"></dd>
+        <dt>Total words:</dt> <dd class="words"></dd>
+        <h2>Author Stats</h2>
+        <p><em>Details on who is writing, and how much writing they are doing...</em></p>
+        <ul class="author-stats">
+        </ul>
+      </section>
+
+
+      </main>
+
     </main>
     <footer>
       &copy; 2015 Code Fellows | Static Blog | Happy Ipsum!
@@ -90,6 +106,7 @@
     <script src="/scripts/articleView.js"></script>
     <script src="/scripts/articleController.js"></script>
     <script src="/scripts/aboutController.js"></script>
+    <script src="/scripts/statsController.js"></script>
     <script src="/scripts/routes.js"></script>
 
 
