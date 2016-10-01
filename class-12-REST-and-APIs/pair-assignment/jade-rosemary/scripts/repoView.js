@@ -9,7 +9,7 @@
     $about.show().siblings().hide();
   };
 
-  // TODO: Remember that new Handlebars template? Let's compile it!
+  // TODO-DONE: Remember that new Handlebars template? Let's compile it!
   // Save the result in this `render` variable.
   var render = function(data) {
     var template = Handlebars.compile($('#repo-template').text());
