@@ -6,13 +6,13 @@
   repos.requestRepos = function(callback) {
     // TODO: How would you like to fetch your repos? Don't forget to call the callback.
     $.ajax({
-        url: 'https://api.github.com/users/repos',
+        url: 'https://api.github.com/users/jjj430',
         type: 'GET',
         headers: {
           'Authorization': 'token ' + githubToken
         },
         success:function(data) {
-          repos.all=data;
+          repos.all.push(data);
           callback();
        },
        error: function() {
